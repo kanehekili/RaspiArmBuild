@@ -1,0 +1,8 @@
+credentials.conf
+*.tar.gz
+*.pkg.tar.xz
+*.pkg.tar.zst
+*.sig
+boot/
+root/
+backup/
