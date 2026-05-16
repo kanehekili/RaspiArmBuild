@@ -10,13 +10,15 @@ if ! mountpoint -q root; then
   exit
 fi
 
-# Load credentials if not already sourced
+if [ ! -f credentials.conf ]; then
+  echo "No credentials.conf found, skipping WiFi setup"
+  return 0 2>/dev/null || exit 0
+fi
+source ./credentials.conf
+
 if [ -z "$WIFI_SSID" ]; then
-  if [ ! -f credentials.conf ]; then
-    echo "Error: credentials.conf not found and WIFI_SSID not set"
-    exit 1
-  fi
-  source ./credentials.conf
+  echo "WIFI_SSID not set, skipping WiFi setup"
+  return 0 2>/dev/null || exit 0
 fi
 
 mkdir -p root/etc/wpa_supplicant

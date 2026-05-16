@@ -49,7 +49,7 @@ wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 - Partitions and formats the SD card (400 MB FAT boot + ext4 root)
 - Unpacks the tarball
 - Calls `populate.sh` (arch-aware chroot setup)
-- Calls `configWlan.sh` if `WIFI_SSID` is set in `credentials.conf`
+- Calls `configWlan.sh` always; WiFi setup is skipped if `credentials.conf` is missing or `WIFI_SSID` is not set
 - For aarch64: calls `tweakAarch64.sh` (writes `config.txt`, `cmdline.txt`, updates fstab via PARTUUID)
 
 ---
@@ -61,7 +61,7 @@ wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-aarch64-latest.tar.gz
 | `makeIso.sh` | Main script. Reads `credentials.conf` for all settings. |
 | `populate.sh` | Chroot setup: auto-detects arch, installs linux-rpi (aarch64), removes linux-firmware bloat, installs rng-tools/wpa_supplicant/sudo, sets up pacman-init.service. |
 | `tweakAarch64.sh` | Writes `config.txt` + `cmdline.txt` to boot/, updates fstab with PARTUUIDs. Called automatically for aarch64. Can also be run standalone on a mounted SD card. |
-| `configWlan.sh` | Sets up wpa_supplicant + systemd-networkd for wlan0/eth0. Called automatically if WIFI_SSID is set. Can also be run standalone on a mounted root/. |
+| `configWlan.sh` | Sets up wpa_supplicant + systemd-networkd for wlan0/eth0. Always called by makeIso.sh; silently skips if credentials.conf is missing or WIFI_SSID is not set. Can also be run standalone on a mounted root/. |
 | `copyKernel.sh` | Manual kernel downgrade for armv7 if needed. |
 | `watchSync.sh` | Monitor sync progress while waiting for bsdtar to finish. |
 

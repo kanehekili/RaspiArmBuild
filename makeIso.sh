@@ -127,7 +127,5 @@ rm root/home/alarm/.bashrc
 cat bash-template.txt >> root/etc/bash.bashrc
 #populate and install rng-tools (faster ssh)
 source ./populate.sh
-if [ -n "$WIFI_SSID" ]; then
-  source ./configWlan.sh
-fi
+source ./configWlan.sh
 echo "Done. Host is $HOSTNAME User pwd is $ALARM_PWD, root pwd is $ROOT_PWD"
